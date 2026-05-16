@@ -1,0 +1,520 @@
+
+╔════════════════════════════════════════════════════════════════╗
+║  🧊 ZenceFil SNOWBALL Discovery Engine v3.0                   ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                                ║
+║  DAHİCE PLAN: Kartopu Stratejisi                              ║
+║  ┌─────────────────────────────────────────────────────┐      ║
+║  │ 1. Bilinen kameralardan başla (tohum)               │      ║
+║  │ 2. /24 subnet komşularını tara                      │      ║
+║  │ 3. Yeni kamera bul → ONUN bloğunu da kuyruğa ekle  │      ║
+║  │ 4. Zincirleme reaksiyon → KARTOPU büyür! ❄️         │      ║
+║  └─────────────────────────────────────────────────────┘      ║
+║                                                                ║
+║  🇹🇷 SADECE Türk IP'leri | 📁 online_findings.txt             ║
+║  Ctrl+C ile durdurun                                           ║
+╚════════════════════════════════════════════════════════════════╝
+    
+  📂 Mevcut 0 kayıt yüklendi
+
+  🌱 PHASE 1: 58 tohum IP'den subnet'ler oluşturuluyor...
+  📋 58 benzersiz /24 subnet kuyruğa alındı
+  🎯 Toplam hedef: ~14732 IP adresi
+  ───────────────────────────────────────────────────────
+
+  🧊 PHASE 2: Kartopu taraması başlıyor...
+
+  🔍 Subnet taranıyor: 78.186.26.0/24 (kuyrukta: 57)
+  🇹🇷 [Port 80] http://78.186.26.56:80/  (#1 | 4s)
+  🇹🇷 [Port 80] http://78.186.26.205:80/  (#2 | 12s)
+  🔍 Subnet taranıyor: 78.186.67.0/24 (kuyrukta: 56)
+
+  📊 [15s] Tarandı: 304 IP | Bulunan: 2 kamera | Subnetler: 2 tamamlandı | Kuyruk: 56 bekliyor
+
+  🇹🇷 [Port 80] http://78.186.67.251:80/  (#3 | 27s)
+
+  📊 [30s] Tarandı: 508 IP | Bulunan: 3 kamera | Subnetler: 2 tamamlandı | Kuyruk: 56 bekliyor
+
+  🔍 Subnet taranıyor: 95.9.143.0/24 (kuyrukta: 55)
+  🇹🇷 [Port 80] http://95.9.143.33:80/  (#4 | 38s)
+  🇹🇷 [Port 80] http://95.9.143.32:80/  (#5 | 38s)
+
+  📊 [45s] Tarandı: 661 IP | Bulunan: 5 kamera | Subnetler: 3 tamamlandı | Kuyruk: 55 bekliyor
+
+  🔍 Subnet taranıyor: 95.9.96.0/24 (kuyrukta: 54)
+  🇹🇷 [Port 80] http://95.9.96.18:80/  (#6 | 53s)
+  🇹🇷 [Port 80] http://95.9.96.39:80/  (#7 | 53s)
+  🇹🇷 [Port 554] http://95.9.96.3:554/  (#8 | 54s)
+  🇹🇷 [Deep:81] http://95.9.96.3:81/  (#9 | 54s)
+  🇹🇷 [Port 554] http://95.9.96.80:554/  (#10 | 56s)
+  🇹🇷 [Deep:81] http://95.9.96.80:81/  (#11 | 57s)
+  🇹🇷 [Deep:82] http://95.9.96.80:82/  (#12 | 57s)
+  🇹🇷 [Deep:83] http://95.9.96.80:83/  (#13 | 57s)
+  🇹🇷 [Deep:84] http://95.9.96.80:84/  (#14 | 57s)
+  🇹🇷 [Deep:85] http://95.9.96.80:85/  (#15 | 59s)
+  🇹🇷 [Deep:88] http://95.9.96.80:88/  (#16 | 59s)
+  🇹🇷 [Deep:8000] http://95.9.96.80:8000/  (#17 | 59s)
+  🇹🇷 [Deep:8001] http://95.9.96.80:8001/  (#18 | 59s)
+
+  📊 [60s] Tarandı: 950 IP | Bulunan: 18 kamera | Subnetler: 4 tamamlandı | Kuyruk: 54 bekliyor
+
+  🇹🇷 [Deep:8081] http://95.9.96.80:8081/  (#19 | 61s)
+  🇹🇷 [Deep:8090] http://95.9.96.80:8090/  (#20 | 61s)
+  🇹🇷 [Deep:8888] http://95.9.96.80:8888/  (#21 | 61s)
+  🇹🇷 [Deep:37777] http://95.9.96.80:37777/  (#22 | 61s)
+  🇹🇷 [Deep:34567] http://95.9.96.80:34567/  (#23 | 61s)
+  🇹🇷 [Deep:50001] http://95.9.96.80:50001/  (#24 | 62s)
+  🇹🇷 [Port 80] http://95.9.96.199:80/  (#25 | 62s)
+  🇹🇷 [Port 8080] http://95.9.96.227:8080/  (#26 | 63s)
+  🇹🇷 [Port 80] http://95.9.96.245:80/  (#27 | 63s)
+  🔍 Subnet taranıyor: 213.153.223.0/24 (kuyrukta: 53)
+  🇹🇷 [Port 80] http://213.153.223.19:80/  (#28 | 75s)
+
+  📊 [75s] Tarandı: 1068 IP | Bulunan: 28 kamera | Subnetler: 5 tamamlandı | Kuyruk: 53 bekliyor
+
+  🔍 Subnet taranıyor: 81.213.28.0/24 (kuyrukta: 52)
+  🇹🇷 [Port 80] http://81.213.28.8:80/  (#29 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.31:80/  (#30 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.39:80/  (#31 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.12:80/  (#32 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.29:80/  (#33 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.13:80/  (#34 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.38:80/  (#35 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.18:80/  (#36 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.42:80/  (#37 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.25:80/  (#38 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.4:80/  (#39 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.47:80/  (#40 | 88s)
+  🇹🇷 [Port 80] http://81.213.28.20:80/  (#41 | 89s)
+
+  📊 [90s] Tarandı: 1320 IP | Bulunan: 41 kamera | Subnetler: 6 tamamlandı | Kuyruk: 52 bekliyor
+
+  🇹🇷 [Port 80] http://81.213.28.52:80/  (#42 | 91s)
+  🇹🇷 [Port 80] http://81.213.28.94:80/  (#43 | 93s)
+  🇹🇷 [Port 80] http://81.213.28.137:80/  (#44 | 94s)
+  🇹🇷 [Port 80] http://81.213.28.138:80/  (#45 | 94s)
+  🇹🇷 [Port 80] http://81.213.28.153:80/  (#46 | 96s)
+  🇹🇷 [Port 80] http://81.213.28.188:80/  (#47 | 96s)
+  🇹🇷 [Port 80] http://81.213.28.213:80/  (#48 | 98s)
+  🇹🇷 [Port 80] http://81.213.28.232:80/  (#49 | 98s)
+  🇹🇷 [Port 80] http://81.213.28.240:80/  (#50 | 100s)
+  🇹🇷 [Port 80] http://81.213.28.233:80/  (#51 | 101s)
+  🇹🇷 [Port 80] http://81.213.28.242:80/  (#52 | 101s)
+  🇹🇷 [Port 80] http://81.213.28.248:80/  (#53 | 101s)
+
+  📊 [105s] Tarandı: 1524 IP | Bulunan: 53 kamera | Subnetler: 6 tamamlandı | Kuyruk: 52 bekliyor
+
+  🔍 Subnet taranıyor: 88.249.83.0/24 (kuyrukta: 51)
+
+  📊 [120s] Tarandı: 1778 IP | Bulunan: 53 kamera | Subnetler: 7 tamamlandı | Kuyruk: 51 bekliyor
+
+  🔍 Subnet taranıyor: 212.154.81.0/24 (kuyrukta: 50)
+
+  📊 [135s] Tarandı: 2032 IP | Bulunan: 53 kamera | Subnetler: 8 tamamlandı | Kuyruk: 50 bekliyor
+
+  🔍 Subnet taranıyor: 195.175.57.0/24 (kuyrukta: 49)
+  🔍 Subnet taranıyor: 85.99.249.0/24 (kuyrukta: 48)
+
+  📊 [150s] Tarandı: 2336 IP | Bulunan: 53 kamera | Subnetler: 10 tamamlandı | Kuyruk: 48 bekliyor
+
+  🔍 Subnet taranıyor: 95.6.39.0/24 (kuyrukta: 47)
+
+  📊 [165s] Tarandı: 2590 IP | Bulunan: 53 kamera | Subnetler: 11 tamamlandı | Kuyruk: 47 bekliyor
+
+  🔍 Subnet taranıyor: 81.213.140.0/24 (kuyrukta: 46)
+  🇹🇷 [Port 80] http://81.213.140.6:80/  (#54 | 179s)
+  🇹🇷 [Port 8080] http://81.213.140.4:8080/  (#55 | 180s)
+
+  📊 [180s] Tarandı: 2845 IP | Bulunan: 55 kamera | Subnetler: 12 tamamlandı | Kuyruk: 46 bekliyor
+
+  🇹🇷 [Port 80] http://81.213.140.154:80/  (#56 | 186s)
+  🇹🇷 [Port 80] http://81.213.140.252:80/  (#57 | 191s)
+
+  📊 [195s] Tarandı: 3048 IP | Bulunan: 57 kamera | Subnetler: 12 tamamlandı | Kuyruk: 46 bekliyor
+
+  🔍 Subnet taranıyor: 88.212.33.0/24 (kuyrukta: 45)
+  🇹🇷 [Port 80] http://88.212.33.40:80/  (#58 | 202s)
+  🇹🇷 [Port 80] http://88.212.33.42:80/  (#59 | 202s)
+  🇹🇷 [Port 80] http://88.212.33.18:80/  (#60 | 202s)
+  🇹🇷 [Port 80] http://88.212.33.51:80/  (#61 | 202s)
+  🇹🇷 [Port 80] http://88.212.33.32:80/  (#62 | 202s)
+  🇹🇷 [Port 8080] http://88.212.33.60:8080/  (#63 | 206s)
+  🇹🇷 [Port 8080] http://88.212.33.163:8080/  (#64 | 210s)
+
+  📊 [210s] Tarandı: 3240 IP | Bulunan: 64 kamera | Subnetler: 13 tamamlandı | Kuyruk: 45 bekliyor
+
+  🇹🇷 [Port 8080] http://88.212.33.151:8080/  (#65 | 211s)
+  🇹🇷 [Port 80] http://88.212.33.196:80/  (#66 | 211s)
+  🇹🇷 [Port 8080] http://88.212.33.152:8080/  (#67 | 211s)
+  🔍 Subnet taranıyor: 95.154.28.0/24 (kuyrukta: 44)
+
+  📊 [225s] Tarandı: 3452 IP | Bulunan: 67 kamera | Subnetler: 14 tamamlandı | Kuyruk: 44 bekliyor
+
+  🔍 Subnet taranıyor: 95.169.71.0/24 (kuyrukta: 43)
+  🇹🇷 [Port 80] http://95.169.71.46:80/  (#68 | 234s)
+  🇹🇷 [Port 80] http://95.169.71.30:80/  (#69 | 234s)
+  🇹🇷 [Port 80] http://95.169.71.41:80/  (#70 | 234s)
+  🇹🇷 [Port 80] http://95.169.71.8:80/  (#71 | 234s)
+  🇹🇷 [Port 80] http://95.169.71.74:80/  (#72 | 236s)
+  🇹🇷 [Port 80] http://95.169.71.78:80/  (#73 | 236s)
+  🇹🇷 [Port 80] http://95.169.71.70:80/  (#74 | 236s)
+  🇹🇷 [Port 8080] http://95.169.71.103:8080/  (#75 | 238s)
+  🇹🇷 [Port 80] http://95.169.71.167:80/  (#76 | 239s)
+
+  📊 [240s] Tarandı: 3734 IP | Bulunan: 76 kamera | Subnetler: 15 tamamlandı | Kuyruk: 43 bekliyor
+
+  🇹🇷 [Port 80] http://95.169.71.205:80/  (#77 | 241s)
+  🇹🇷 [Port 8080] http://95.169.71.173:8080/  (#78 | 241s)
+  🇹🇷 [Port 8080] http://95.169.71.197:8080/  (#79 | 242s)
+  🇹🇷 [Deep:83] http://95.169.71.167:83/  (#80 | 243s)
+  🇹🇷 [Port 80] http://95.169.71.213:80/  (#81 | 243s)
+  🇹🇷 [Port 80] http://95.169.71.238:80/  (#82 | 243s)
+  🇹🇷 [Deep:84] http://95.169.71.167:84/  (#83 | 243s)
+  🇹🇷 [Deep:85] http://95.169.71.167:85/  (#84 | 243s)
+  🇹🇷 [Port 8080] http://95.169.71.209:8080/  (#85 | 244s)
+  🇹🇷 [Port 80] http://95.169.71.240:80/  (#86 | 244s)
+  🇹🇷 [Deep:85] http://95.169.71.209:85/  (#87 | 246s)
+
+  📊 [255s] Tarandı: 3810 IP | Bulunan: 87 kamera | Subnetler: 15 tamamlandı | Kuyruk: 43 bekliyor
+
+  🔍 Subnet taranıyor: 78.186.100.0/24 (kuyrukta: 42)
+  🔍 Subnet taranıyor: 78.186.150.0/24 (kuyrukta: 41)
+  🇹🇷 [Port 80] http://78.186.150.48:80/  (#88 | 269s)
+  🇹🇷 [Port 80] http://78.186.150.25:80/  (#89 | 269s)
+  🇹🇷 [Port 80] http://78.186.150.16:80/  (#90 | 269s)
+  🇹🇷 [Port 80] http://78.186.150.52:80/  (#91 | 270s)
+
+  📊 [270s] Tarandı: 4116 IP | Bulunan: 91 kamera | Subnetler: 17 tamamlandı | Kuyruk: 41 bekliyor
+
+  🇹🇷 [Port 8080] http://78.186.150.62:8080/  (#92 | 273s)
+  🇹🇷 [Port 8080] http://78.186.150.115:8080/  (#93 | 274s)
+  🇹🇷 [Port 80] http://78.186.150.193:80/  (#94 | 278s)
+  🇹🇷 [Port 80] http://78.186.150.242:80/  (#95 | 281s)
+
+  📊 [285s] Tarandı: 4318 IP | Bulunan: 95 kamera | Subnetler: 17 tamamlandı | Kuyruk: 41 bekliyor
+
+  🔍 Subnet taranıyor: 78.186.200.0/24 (kuyrukta: 40)
+  🇹🇷 [Port 80] http://78.186.200.31:80/  (#96 | 286s)
+  🇹🇷 [Port 80] http://78.186.200.25:80/  (#97 | 287s)
+  🔍 Subnet taranıyor: 78.189.50.0/24 (kuyrukta: 39)
+
+  📊 [300s] Tarandı: 4622 IP | Bulunan: 97 kamera | Subnetler: 19 tamamlandı | Kuyruk: 39 bekliyor
+
+  🇹🇷 [Port 80] http://78.189.50.207:80/  (#98 | 311s)
+
+  📊 [315s] Tarandı: 4826 IP | Bulunan: 98 kamera | Subnetler: 19 tamamlandı | Kuyruk: 39 bekliyor
+
+  🔍 Subnet taranıyor: 78.189.100.0/24 (kuyrukta: 38)
+  🇹🇷 [Port 80] http://78.189.100.7:80/  (#99 | 320s)
+  🇹🇷 [Port 80] http://78.189.100.8:80/  (#100 | 320s)
+  🇹🇷 [Port 80] http://78.189.100.18:80/  (#101 | 320s)
+
+  📊 [330s] Tarandı: 5079 IP | Bulunan: 101 kamera | Subnetler: 20 tamamlandı | Kuyruk: 38 bekliyor
+
+  🔍 Subnet taranıyor: 78.189.150.0/24 (kuyrukta: 37)
+  🇹🇷 [Port 80] http://78.189.150.201:80/  (#102 | 341s)
+  🇹🇷 [Port 80] http://78.189.150.202:80/  (#103 | 344s)
+
+  📊 [345s] Tarandı: 5334 IP | Bulunan: 103 kamera | Subnetler: 21 tamamlandı | Kuyruk: 37 bekliyor
+
+  🔍 Subnet taranıyor: 78.189.200.0/24 (kuyrukta: 36)
+  🇹🇷 [Port 80] http://78.189.200.36:80/  (#104 | 352s)
+  🇹🇷 [Port 80] http://78.189.200.8:80/  (#105 | 352s)
+  🇹🇷 [Port 80] http://78.189.200.24:80/  (#106 | 354s)
+  🇹🇷 [Port 80] http://78.189.200.104:80/  (#107 | 356s)
+  🇹🇷 [Port 80] http://78.189.200.146:80/  (#108 | 357s)
+  🇹🇷 [Port 80] http://78.189.200.194:80/  (#109 | 360s)
+
+  📊 [360s] Tarandı: 5529 IP | Bulunan: 109 kamera | Subnetler: 22 tamamlandı | Kuyruk: 36 bekliyor
+
+  🔍 Subnet taranıyor: 85.105.50.0/24 (kuyrukta: 35)
+  🇹🇷 [Port 80] http://85.105.50.3:80/  (#110 | 369s)
+  🇹🇷 [Port 80] http://85.105.50.58:80/  (#111 | 371s)
+  🇹🇷 [Port 80] http://85.105.50.63:80/  (#112 | 373s)
+
+  📊 [375s] Tarandı: 5742 IP | Bulunan: 112 kamera | Subnetler: 23 tamamlandı | Kuyruk: 35 bekliyor
+
+  🇹🇷 [Port 80] http://85.105.50.153:80/  (#113 | 375s)
+  🇹🇷 [Port 80] http://85.105.50.224:80/  (#114 | 380s)
+  🔍 Subnet taranıyor: 85.105.100.0/24 (kuyrukta: 34)
+  🇹🇷 [Port 80] http://85.105.100.12:80/  (#115 | 388s)
+  🇹🇷 [Port 80] http://85.105.100.52:80/  (#116 | 388s)
+  🇹🇷 [Port 80] http://85.105.100.10:80/  (#117 | 389s)
+
+  📊 [390s] Tarandı: 5901 IP | Bulunan: 117 kamera | Subnetler: 24 tamamlandı | Kuyruk: 34 bekliyor
+
+  🇹🇷 [Port 8080] http://85.105.100.202:8080/  (#118 | 399s)
+
+  📊 [405s] Tarandı: 6096 IP | Bulunan: 118 kamera | Subnetler: 24 tamamlandı | Kuyruk: 34 bekliyor
+
+  🔍 Subnet taranıyor: 85.105.150.0/24 (kuyrukta: 33)
+  🇹🇷 [Port 80] http://85.105.150.14:80/  (#119 | 407s)
+  🇹🇷 [Port 80] http://85.105.150.27:80/  (#120 | 407s)
+  🇹🇷 [Port 80] http://85.105.150.106:80/  (#121 | 411s)
+
+  📊 [420s] Tarandı: 6350 IP | Bulunan: 121 kamera | Subnetler: 25 tamamlandı | Kuyruk: 33 bekliyor
+
+  🔍 Subnet taranıyor: 88.247.50.0/24 (kuyrukta: 32)
+  🇹🇷 [Port 80] http://88.247.50.153:80/  (#122 | 426s)
+  🇹🇷 [Port 80] http://88.247.50.174:80/  (#123 | 429s)
+
+  📊 [435s] Tarandı: 6604 IP | Bulunan: 123 kamera | Subnetler: 26 tamamlandı | Kuyruk: 32 bekliyor
+
+  🔍 Subnet taranıyor: 88.247.100.0/24 (kuyrukta: 31)
+  🇹🇷 [Port 80] http://88.247.100.107:80/  (#124 | 442s)
+  🇹🇷 [Port 80] http://88.247.100.211:80/  (#125 | 447s)
+  🇹🇷 [Port 80] http://88.247.100.222:80/  (#126 | 447s)
+
+  📊 [450s] Tarandı: 6858 IP | Bulunan: 126 kamera | Subnetler: 27 tamamlandı | Kuyruk: 31 bekliyor
+
+  🇹🇷 [Deep:8001] http://88.247.100.211:8001/  (#127 | 451s)
+  🔍 Subnet taranıyor: 88.247.150.0/24 (kuyrukta: 30)
+
+  📊 [465s] Tarandı: 7057 IP | Bulunan: 127 kamera | Subnetler: 28 tamamlandı | Kuyruk: 30 bekliyor
+
+  🔍 Subnet taranıyor: 95.2.50.0/24 (kuyrukta: 29)
+
+  📊 [480s] Tarandı: 7312 IP | Bulunan: 127 kamera | Subnetler: 29 tamamlandı | Kuyruk: 29 bekliyor
+
+  🔍 Subnet taranıyor: 95.2.100.0/24 (kuyrukta: 28)
+
+  📊 [495s] Tarandı: 7566 IP | Bulunan: 127 kamera | Subnetler: 30 tamamlandı | Kuyruk: 28 bekliyor
+
+  🔍 Subnet taranıyor: 95.2.150.0/24 (kuyrukta: 27)
+
+  📊 [510s] Tarandı: 7820 IP | Bulunan: 127 kamera | Subnetler: 31 tamamlandı | Kuyruk: 27 bekliyor
+
+  🔍 Subnet taranıyor: 95.2.200.0/24 (kuyrukta: 26)
+
+  📊 [525s] Tarandı: 8074 IP | Bulunan: 127 kamera | Subnetler: 32 tamamlandı | Kuyruk: 26 bekliyor
+
+  🔍 Subnet taranıyor: 95.5.50.0/24 (kuyrukta: 25)
+  🇹🇷 [Port 80] http://95.5.50.155:80/  (#128 | 539s)
+
+  📊 [540s] Tarandı: 8332 IP | Bulunan: 128 kamera | Subnetler: 33 tamamlandı | Kuyruk: 25 bekliyor
+
+  🔍 Subnet taranıyor: 95.5.100.0/24 (kuyrukta: 24)
+
+  📊 [555s] Tarandı: 8632 IP | Bulunan: 128 kamera | Subnetler: 34 tamamlandı | Kuyruk: 24 bekliyor
+
+  🔍 Subnet taranıyor: 95.5.150.0/24 (kuyrukta: 23)
+
+  📊 [570s] Tarandı: 8886 IP | Bulunan: 128 kamera | Subnetler: 35 tamamlandı | Kuyruk: 23 bekliyor
+
+  🔍 Subnet taranıyor: 95.7.50.0/24 (kuyrukta: 22)
+
+  📊 [585s] Tarandı: 9140 IP | Bulunan: 128 kamera | Subnetler: 36 tamamlandı | Kuyruk: 22 bekliyor
+
+  🔍 Subnet taranıyor: 95.7.100.0/24 (kuyrukta: 21)
+
+  📊 [600s] Tarandı: 9398 IP | Bulunan: 128 kamera | Subnetler: 37 tamamlandı | Kuyruk: 21 bekliyor
+
+  🔍 Subnet taranıyor: 95.7.150.0/24 (kuyrukta: 20)
+
+  📊 [615s] Tarandı: 9652 IP | Bulunan: 128 kamera | Subnetler: 38 tamamlandı | Kuyruk: 20 bekliyor
+
+  🔍 Subnet taranıyor: 95.8.50.0/24 (kuyrukta: 19)
+  🔍 Subnet taranıyor: 95.8.100.0/24 (kuyrukta: 18)
+
+  📊 [630s] Tarandı: 9956 IP | Bulunan: 128 kamera | Subnetler: 40 tamamlandı | Kuyruk: 18 bekliyor
+
+  🔍 Subnet taranıyor: 95.12.50.0/24 (kuyrukta: 17)
+
+  📊 [645s] Tarandı: 10210 IP | Bulunan: 128 kamera | Subnetler: 41 tamamlandı | Kuyruk: 17 bekliyor
+
+  🔍 Subnet taranıyor: 176.216.50.0/24 (kuyrukta: 16)
+
+  📊 [660s] Tarandı: 10464 IP | Bulunan: 128 kamera | Subnetler: 42 tamamlandı | Kuyruk: 16 bekliyor
+
+  🔍 Subnet taranıyor: 176.216.100.0/24 (kuyrukta: 15)
+
+  📊 [675s] Tarandı: 10718 IP | Bulunan: 128 kamera | Subnetler: 43 tamamlandı | Kuyruk: 15 bekliyor
+
+  🔍 Subnet taranıyor: 176.234.50.0/24 (kuyrukta: 14)
+
+  📊 [690s] Tarandı: 11022 IP | Bulunan: 128 kamera | Subnetler: 44 tamamlandı | Kuyruk: 14 bekliyor
+
+  🔍 Subnet taranıyor: 176.234.100.0/24 (kuyrukta: 13)
+
+  📊 [705s] Tarandı: 11276 IP | Bulunan: 128 kamera | Subnetler: 45 tamamlandı | Kuyruk: 13 bekliyor
+
+  🔍 Subnet taranıyor: 212.156.50.0/24 (kuyrukta: 12)
+
+  📊 [720s] Tarandı: 11530 IP | Bulunan: 128 kamera | Subnetler: 46 tamamlandı | Kuyruk: 12 bekliyor
+
+  🔍 Subnet taranıyor: 212.156.100.0/24 (kuyrukta: 11)
+
+  📊 [735s] Tarandı: 11834 IP | Bulunan: 128 kamera | Subnetler: 47 tamamlandı | Kuyruk: 11 bekliyor
+
+  🔍 Subnet taranıyor: 212.174.50.0/24 (kuyrukta: 10)
+
+  📊 [750s] Tarandı: 12088 IP | Bulunan: 128 kamera | Subnetler: 48 tamamlandı | Kuyruk: 10 bekliyor
+
+  🔍 Subnet taranıyor: 212.174.100.0/24 (kuyrukta: 9)
+
+  📊 [765s] Tarandı: 12342 IP | Bulunan: 128 kamera | Subnetler: 49 tamamlandı | Kuyruk: 9 bekliyor
+
+  🔍 Subnet taranıyor: 31.223.50.0/24 (kuyrukta: 8)
+
+  📊 [780s] Tarandı: 12646 IP | Bulunan: 128 kamera | Subnetler: 50 tamamlandı | Kuyruk: 8 bekliyor
+
+  🔍 Subnet taranıyor: 31.223.100.0/24 (kuyrukta: 7)
+
+  📊 [795s] Tarandı: 12900 IP | Bulunan: 128 kamera | Subnetler: 51 tamamlandı | Kuyruk: 7 bekliyor
+
+  🔍 Subnet taranıyor: 31.223.150.0/24 (kuyrukta: 6)
+
+  📊 [810s] Tarandı: 13154 IP | Bulunan: 128 kamera | Subnetler: 52 tamamlandı | Kuyruk: 6 bekliyor
+
+  🔍 Subnet taranıyor: 46.196.50.0/24 (kuyrukta: 5)
+
+  📊 [825s] Tarandı: 13410 IP | Bulunan: 128 kamera | Subnetler: 53 tamamlandı | Kuyruk: 5 bekliyor
+
+  🔍 Subnet taranıyor: 46.196.100.0/24 (kuyrukta: 4)
+
+  📊 [840s] Tarandı: 13712 IP | Bulunan: 128 kamera | Subnetler: 54 tamamlandı | Kuyruk: 4 bekliyor
+
+  🔍 Subnet taranıyor: 5.25.50.0/24 (kuyrukta: 3)
+
+  📊 [855s] Tarandı: 13966 IP | Bulunan: 128 kamera | Subnetler: 55 tamamlandı | Kuyruk: 3 bekliyor
+
+  🔍 Subnet taranıyor: 5.25.100.0/24 (kuyrukta: 2)
+  🇹🇷 [Port 80] http://5.25.100.23:80/  (#129 | 860s)
+
+  📊 [870s] Tarandı: 14224 IP | Bulunan: 129 kamera | Subnetler: 56 tamamlandı | Kuyruk: 2 bekliyor
+
+  🇹🇷 [Port 554] http://5.25.100.190:554/  (#130 | 871s)
+  🇹🇷 [Deep:8000] http://5.25.100.190:8000/  (#131 | 874s)
+  🔍 Subnet taranıyor: 5.26.50.0/24 (kuyrukta: 1)
+
+  📊 [885s] Tarandı: 14474 IP | Bulunan: 131 kamera | Subnetler: 57 tamamlandı | Kuyruk: 1 bekliyor
+
+  🔍 Subnet taranıyor: 5.26.100.0/24 (kuyrukta: 0)
+  🇹🇷 [Port 80] http://5.26.100.202:80/  (#132 | 900s)
+
+  📊 [900s] Tarandı: 14731 IP | Bulunan: 132 kamera | Subnetler: 58 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 78.160.86.0/24 (kuyrukta: 0)
+
+  📊 [915s] Tarandı: 14986 IP | Bulunan: 132 kamera | Subnetler: 59 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.223.254.0/24 (kuyrukta: 0)
+
+  📊 [930s] Tarandı: 15240 IP | Bulunan: 132 kamera | Subnetler: 60 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 81.215.73.0/24 (kuyrukta: 0)
+
+  📊 [945s] Tarandı: 15494 IP | Bulunan: 132 kamera | Subnetler: 61 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 88.248.23.0/24 (kuyrukta: 0)
+  🇹🇷 [Port 80] http://88.248.23.46:80/  (#133 | 947s)
+
+  📊 [960s] Tarandı: 15748 IP | Bulunan: 133 kamera | Subnetler: 62 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 78.187.59.0/24 (kuyrukta: 0)
+  🔍 Subnet taranıyor: 88.252.60.0/24 (kuyrukta: 0)
+
+  📊 [975s] Tarandı: 16052 IP | Bulunan: 133 kamera | Subnetler: 64 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 95.2.218.0/24 (kuyrukta: 0)
+
+  📊 [990s] Tarandı: 16306 IP | Bulunan: 133 kamera | Subnetler: 65 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 213.15.129.0/24 (kuyrukta: 0)
+
+  📊 [1005s] Tarandı: 16560 IP | Bulunan: 133 kamera | Subnetler: 66 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.224.240.0/24 (kuyrukta: 0)
+
+  📊 [1020s] Tarandı: 16814 IP | Bulunan: 133 kamera | Subnetler: 67 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 85.103.44.0/24 (kuyrukta: 0)
+
+  📊 [1035s] Tarandı: 17118 IP | Bulunan: 133 kamera | Subnetler: 68 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 213.15.116.0/24 (kuyrukta: 0)
+
+  📊 [1050s] Tarandı: 17372 IP | Bulunan: 133 kamera | Subnetler: 69 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 213.15.171.0/24 (kuyrukta: 0)
+
+  📊 [1065s] Tarandı: 17626 IP | Bulunan: 133 kamera | Subnetler: 70 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.236.222.0/24 (kuyrukta: 0)
+
+  📊 [1080s] Tarandı: 17884 IP | Bulunan: 133 kamera | Subnetler: 71 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.239.92.0/24 (kuyrukta: 0)
+
+  📊 [1095s] Tarandı: 18184 IP | Bulunan: 133 kamera | Subnetler: 72 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 85.98.245.0/24 (kuyrukta: 0)
+
+  📊 [1110s] Tarandı: 18438 IP | Bulunan: 133 kamera | Subnetler: 73 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.229.205.0/24 (kuyrukta: 0)
+
+  📊 [1125s] Tarandı: 18692 IP | Bulunan: 133 kamera | Subnetler: 74 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 78.179.155.0/24 (kuyrukta: 0)
+
+  📊 [1140s] Tarandı: 18996 IP | Bulunan: 133 kamera | Subnetler: 75 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.225.206.0/24 (kuyrukta: 0)
+
+  📊 [1155s] Tarandı: 19250 IP | Bulunan: 133 kamera | Subnetler: 76 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 88.227.200.0/24 (kuyrukta: 0)
+
+  📊 [1170s] Tarandı: 19504 IP | Bulunan: 133 kamera | Subnetler: 77 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 213.14.200.0/24 (kuyrukta: 0)
+
+  📊 [1185s] Tarandı: 19758 IP | Bulunan: 133 kamera | Subnetler: 78 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 85.109.216.0/24 (kuyrukta: 0)
+
+  📊 [1200s] Tarandı: 20012 IP | Bulunan: 133 kamera | Subnetler: 79 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 95.13.9.0/24 (kuyrukta: 0)
+
+  📊 [1215s] Tarandı: 20315 IP | Bulunan: 133 kamera | Subnetler: 80 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 78.188.186.0/24 (kuyrukta: 0)
+
+  📊 [1230s] Tarandı: 20568 IP | Bulunan: 133 kamera | Subnetler: 81 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 78.183.165.0/24 (kuyrukta: 0)
+
+  📊 [1245s] Tarandı: 20824 IP | Bulunan: 133 kamera | Subnetler: 82 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 81.215.93.0/24 (kuyrukta: 0)
+
+  📊 [1260s] Tarandı: 21078 IP | Bulunan: 133 kamera | Subnetler: 83 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 88.240.41.0/24 (kuyrukta: 0)
+
+  📊 [1275s] Tarandı: 21336 IP | Bulunan: 133 kamera | Subnetler: 84 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.218.188.0/24 (kuyrukta: 0)
+
+  📊 [1290s] Tarandı: 21590 IP | Bulunan: 133 kamera | Subnetler: 85 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 95.11.23.0/24 (kuyrukta: 0)
+
+  📊 [1305s] Tarandı: 21844 IP | Bulunan: 133 kamera | Subnetler: 86 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.236.207.0/24 (kuyrukta: 0)
+
+  📊 [1320s] Tarandı: 22098 IP | Bulunan: 133 kamera | Subnetler: 87 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 212.159.48.0/24 (kuyrukta: 0)
+  🔍 Subnet taranıyor: 88.234.188.0/24 (kuyrukta: 0)
+
+  📊 [1335s] Tarandı: 22402 IP | Bulunan: 133 kamera | Subnetler: 89 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 213.14.193.0/24 (kuyrukta: 0)
+
+  📊 [1350s] Tarandı: 22656 IP | Bulunan: 133 kamera | Subnetler: 90 tamamlandı | Kuyruk: 0 bekliyor
+
+  🔍 Subnet taranıyor: 176.224.190.0/24 (kuyrukta: 0)

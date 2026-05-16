@@ -1,0 +1,8 @@
+BGPID=$!
+sleep 3
+if ps -p $BGPID > /dev/null 2>&1; then
+  echo "✅ Running PID=$BGPID"
+else
+  echo "❌ Process died! Checking log:"
+  cat hotel_log.txt
+fi
