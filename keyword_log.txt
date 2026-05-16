@@ -1,0 +1,109 @@
+
+╔════════════════════════════════════════════════════════════════╗
+║  🔍 ZenceFil Keyword Camera Hunter v1.0                       ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                                ║
+║  Hedef: Kamera içeriğinde şu kelimeler geçen IP'ler:          ║
+║  otel                                                         ║
+║                                                                ║
+║  Kaynak 1: Insecam tag araması                                 ║
+║  Kaynak 2: Mevcut IP'lerin içerik analizi                      ║
+║  Kaynak 3: TR ISP tarama + keyword kontrolü                   ║
+║                                                                ║
+║  📁 keyword_cameras.txt (etiketli sonuçlar)                    ║
+║  Ctrl+C ile durdurun                                           ║
+╚════════════════════════════════════════════════════════════════╝
+    
+  🌐 ARKA PLAN: Insecam Hotel Tag Araması başlatıldı...
+  � ANA MOTOR: Otel/Hotel Keyword Taraması (Sonsuz Mod)  🌐 Insecam: 2401 sayfa taranıyor (49 tag)...
+
+  🇹🇷 16 TR ISP bloğu | Hedef: otel, hotel, lobby, resepsiyon...
+  ───────────────────────────────────────────────────────
+  � ARKA PLAN: 143 mevcut IP içerik analizi...
+  🏷️ [OTEL] http://88.212.33.196:80/
+      Keyword: "guest" | #1 | 10s
+  🎯 Insecam: 37 IP → İçerik analizi...
+
+  📊 [15s] Kontrol: 181 | Keyword Eşleşme: 1 kamera
+
+  ✅ Insecam tamamlandı. Toplam: 1
+
+  📊 [30s] Kontrol: 181 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #3: Otel eşleşme: 1
+
+  📊 [45s] Kontrol: 181 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [60s] Kontrol: 181 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [75s] Kontrol: 186 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #6: Otel eşleşme: 1
+
+  📊 [90s] Kontrol: 187 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [105s] Kontrol: 188 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [120s] Kontrol: 188 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #9: Otel eşleşme: 1
+
+  📊 [135s] Kontrol: 188 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [150s] Kontrol: 191 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [165s] Kontrol: 191 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #12: Otel eşleşme: 1
+
+  📊 [180s] Kontrol: 192 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [195s] Kontrol: 192 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [210s] Kontrol: 192 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #15: Otel eşleşme: 1
+
+  📊 [225s] Kontrol: 192 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [240s] Kontrol: 192 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [255s] Kontrol: 192 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #18: Otel eşleşme: 1
+
+  📊 [270s] Kontrol: 194 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [285s] Kontrol: 194 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [300s] Kontrol: 194 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #21: Otel eşleşme: 1
+
+  📊 [315s] Kontrol: 196 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [330s] Kontrol: 197 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [345s] Kontrol: 197 | Keyword Eşleşme: 1 kamera
+
+  🔄 Batch #24: Otel eşleşme: 1
+
+  📊 [360s] Kontrol: 197 | Keyword Eşleşme: 1 kamera
+
+
+  📊 [375s] Kontrol: 197 | Keyword Eşleşme: 1 kamera
+

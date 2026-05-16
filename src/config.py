@@ -42,22 +42,26 @@ class PantheonConfiguration:
 
     controls = {
         'view-feed': "[Enter]",
-        'view-http': "Right-click (Win/Linux) or Control-click (Mac)",
-        'verbosity': "Adjust verbosity slider for more results", 
-        'save-crawl': "Pantheon File Controller -> Save Pantheon Crawl",
-        'load-crawl': "Pantheon File Controller -> Load Pantheon Crawl",
-        'search-http': "Use the search bar on the HTTP window to search for keywords"
+        'view-http': "Sağ-Tık (Win/Linux) veya Control-Tık (Mac)",
+        'verbosity': "Yoğunluk kaydırıcısını kullanarak daha fazla sonuç alın", 
+        'save-crawl': "Dosya Kontrolörü -> Tarama Verisini Kaydet",
+        'load-crawl': "Dosya Kontrolörü -> Tarama Verisini Yükle",
+        'search-http': "Arama çubuğunu kullanarak anahtar kelime arayın"
     }
 
     @staticmethod 
     def pantheon_icon_handler(root):
+        import os
         if PantheonConfiguration.PANTHEON_OS == "Windows":
-            root.iconbitmap("imgs/pantheon_icon.ico")
+            if os.path.exists("imgs/pantheon_icon.ico"):
+                root.iconbitmap("imgs/pantheon_icon.ico")
         if PantheonConfiguration.PANTHEON_OS == "Linux":
-            root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file='imgs/pantheon_icon.png'))
+            if os.path.exists("imgs/pantheon_icon.png"):
+                root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file='imgs/pantheon_icon.png'))
         if PantheonConfiguration.PANTHEON_OS == "Darwin":
-            img = tk.Image("photo", file="imgs/pantheon_icon.png")
-            root.call('wm', 'iconphoto', root._w, img)
+            if os.path.exists("imgs/pantheon_icon.png"):
+                img = tk.Image("photo", file="imgs/pantheon_icon.png")
+                root.call('wm', 'iconphoto', root._w, img)
         else:
             return None
     

@@ -22,11 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
 
-from ip2geotools.databases.noncommercial import DbIpCity
+try:
+    from ip2geotools.databases.noncommercial import DbIpCity
+    HAS_IP2GEOTOOLS = True
+except ImportError:
+    HAS_IP2GEOTOOLS = False
 
 class IPGeolocation:
     @staticmethod
     def get_location_ip2(ip_address): 
+        if not HAS_IP2GEOTOOLS:
+            print(f"[WARN] ip2geotools not installed. Skipping secondary geolocation for {ip_address}")
+            return None
         try:
             response = DbIpCity.get(ip_address, api_key='free')
             return {

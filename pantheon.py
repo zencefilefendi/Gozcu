@@ -1,7 +1,7 @@
 '''
 MIT License
 
-Copyright (c) 2023 Josh Schiavone
+Copyright (c) 2026 Zencefil Efendi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -9,17 +9,6 @@ in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 '''
 
 import sys
@@ -27,6 +16,7 @@ import os
 sys.dont_write_bytecode = True
 
 import tkinter as tk
+import customtkinter as ctk
 import tkintermapview 
 import tkinter.font as tkFont
 from tkinter import filedialog as fd
@@ -36,519 +26,408 @@ import webview, webbrowser
 
 import concurrent.futures
 import re
-
 import requests
 import pycountry
 import urllib3
-
-from src.crawler import PantheonWebcam
-from src.config import PantheonConfiguration
-from src.logger import PantheonLogger
-
-from src.geo import *
-
-from headers.agents import Agents
 import random
 
+from src.crawler import PantheonWebcam, ZenceFilSmartAnalyze
+from src.config import PantheonConfiguration
+from src.logger import PantheonLogger
+from src.geo import *
+from src.voice_assistant import ZenceFilVoice
+from headers.agents import Agents
 
-__author__ = "Josh Schiavone"
-__version__ = "1.2"
+__author__ = "Zencefil Efendi"
+__version__ = "3.0 (SOC Dashboard Edition)"
 
-class Pantheon:
-    def __init__(self, root):
-        self.setup_window(root)
-        self.create_widgets(root)
+# Appearance Mode & Theme
+ctk.set_appearance_mode("Dark")
+ctk.set_default_color_theme("green")
+
+class ZenceFilDashboard(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        # Window Settings
+        # Window Settings
+        self.title(f"ZenceFil Project HADES | v{__version__} | Cyber Intelligence Fusion")
+        self.geometry("1400x900")
+        self.configure(fg_color="#0b0e14") # Obsidian Deep Black
+        
+        # Initialize Config
+        PantheonConfiguration.PANTHEON_DEFAULT_COUNT = 30
+
+        # Grid Configuration (2x3)
+        self.grid_columnconfigure(0, weight=0) # Sidebar
+        self.grid_columnconfigure(1, weight=1) # Main View
+        self.grid_columnconfigure(2, weight=0) # Intelligence Side
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=0) # Bottom Console
+        
         self.markers = []
+        self.setup_ui()
+        self.update_slider_label(30)
+        # Delay voice notification slightly so it doesn't block GUI rendering on MacOS
+        self.after(500, ZenceFilVoice.notify_system_start)
+        
+        
+    def setup_ui(self):
+        # 1. Sidebar Frame
+        self.sidebar_frame = ctk.CTkFrame(self, width=200, corner_radius=0, fg_color="#0f1219", border_color="#18E63B", border_width=1)
+        self.sidebar_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
+        
+        self.logo_label = ctk.CTkLabel(self.sidebar_frame, text="ZenceFil.", font=ctk.CTkFont(family="Terminal", size=24, weight="bold"), text_color="#18E63B")
+        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        
+        self.sub_label = ctk.CTkLabel(self.sidebar_frame, text="IoT SOC TERMINAL", font=ctk.CTkFont(size=10, slant="italic"), text_color="#18E63B")
+        self.sub_label.grid(row=1, column=0, padx=20, pady=(0, 20))
 
-        self.auto_log_data = []
-        self.ip_data = []
+        # Country Scrollable Frame in Sidebar
+        self.scroll_frame = ctk.CTkScrollableFrame(self.sidebar_frame, label_text="OPERASYON BÖLGESİ", label_font=ctk.CTkFont(size=12, weight="bold"), 
+                                                 fg_color="transparent", label_text_color="#18E63B")
+        self.scroll_frame.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
+        self.sidebar_frame.grid_rowconfigure(2, weight=1)
 
-    def setup_window(self, root):
-        width, height = 1261, 825
-        screenwidth, screenheight = root.winfo_screenwidth(), root.winfo_screenheight()
-        alignstr = '%dx%d+%d+%d' % ((width, height, (screenwidth - width) / 2, (screenheight - height) / 2))
-        root.geometry(alignstr)
-        root.configure(bg="#000000")
-        root.resizable(width=False, height=False)
-        root.title(self.get_platform_title())
+        self.add_country_buttons()
 
-        try: PantheonConfiguration.pantheon_icon_handler(root) 
-        except Exception: pass
-   
-    def create_widgets(self, root):
-        self.results_box = tk.Listbox(root, selectmode=tk.SINGLE)
-        self.results_box2 = tk.Text(root, wrap="word", font=("Arial", 12), bg="#000000", fg="#ffffff")
+        # Sidebar Controls
+        self.save_btn = ctk.CTkButton(self.sidebar_frame, text="LOG KAYDET", command=self.write_file_handler, fg_color="transparent", 
+                                      border_width=1, border_color="#18E63B", text_color="#18E63B", hover_color="#1a202c")
+        self.save_btn.grid(row=3, column=0, padx=20, pady=(20, 10))
+        
+        self.load_btn = ctk.CTkButton(self.sidebar_frame, text="LOG YÜKLE", command=self.load_logfile, fg_color="transparent", 
+                                      border_width=1, border_color="#18E63B", text_color="#18E63B", hover_color="#1a202c")
+        self.load_btn.grid(row=4, column=0, padx=20, pady=0)
 
-        self.setup_results_box()
-        if sys.platform == "darwin":
-            self.results_box.bind("<Control-Button-1>", self.get_http_data)
-            self.results_box.bind("<Return>", self.browser_load_url)
-            self.results_box.bind("<<ListboxSelect>>", self.add_ip_location)
-        else:
-            self.results_box.bind("<Return>", self.browser_load_url)
-            self.results_box.bind("<<ListboxSelect>>", self.add_ip_location)
-            self.results_box.bind("<Button-3>", self.get_http_data)
+        # TURBO MODE Switch
+        self.turbo_var = tk.BooleanVar(value=False)
+        self.turbo_switch = ctk.CTkSwitch(self.sidebar_frame, text="TURBO MOD (100+)", variable=self.turbo_var,
+                                          progress_color="#18E63B", button_color="#18E63B", text_color="#18E63B",
+                                          font=ctk.CTkFont(size=10, weight="bold"))
+        self.turbo_switch.grid(row=5, column=0, padx=20, pady=20)
 
-        country_buttons = self.create_country_widgets(root)
-        self.create_country_buttons(country_buttons)
+        # 2. Main View (Center)
+        self.main_frame = ctk.CTkFrame(self, corner_radius=10, fg_color="#0b0e14")
+        self.main_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        self.main_frame.grid_rowconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=1)
 
-        self.map_widget = tkintermapview.TkinterMapView(root, width=100, height=100, corner_radius=0)
-        self.map_widget.set_tile_server("https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", max_zoom=25)  
+        # Statistic Cards (Top of Main)
+        self.stats_frame = ctk.CTkFrame(self.main_frame, fg_color="transparent")
+        self.stats_frame.grid(row=0, column=0, sticky="ew", pady=(0, 10))
+        
+        self.stat_card_targets = self.create_stat_card(self.stats_frame, "TOPLAM HEDEF", "0")
+        self.stat_card_targets.grid(row=0, column=0, padx=5)
+        
+        self.stat_card_online = self.create_stat_card(self.stats_frame, "CANLI SİSTEMLER", "0")
+        self.stat_card_online.grid(row=0, column=1, padx=5)
+        self.stat_card_online.val_label.configure(text_color="#18E63B") # Bright Green
 
-        self.map_widget.place(x=650, y=470, width=530, height=300)
-        self.map_widget.set_zoom(0)
+        self.stat_card_offline = self.create_stat_card(self.stats_frame, "ÇEVRİMDIŞI", "0")
+        self.stat_card_offline.grid(row=0, column=2, padx=5)
+        self.stat_card_offline.val_label.configure(text_color="#ff4d4d") # Warning Red
+        
+        self.stat_card_intensity = self.create_stat_card(self.stats_frame, "TARAMA DERİNLİĞİ", "100")
+        self.stat_card_intensity.grid(row=0, column=3, padx=5)
+        
+        # Extreme Deep Scan Support
+        self.slider = ctk.CTkSlider(self.stats_frame, from_=10, to=20000, command=self.update_slider_label, button_color="#18E63B", progress_color="#18E63B")
+        self.slider.set(20000)
+        self.slider.grid(row=0, column=4, padx=10)
 
-        self.slider = tk.Scale(root, from_=30, to=300, orient=tk.HORIZONTAL, bg="#000000", fg="#ffffff", font=("Arial", 10))
-        self.slider.place(x=950, y=95, width=260, height=40)
+        # Map Widget
+        self.map_widget = tkintermapview.TkinterMapView(self.main_frame, corner_radius=10)
+        self.map_widget.set_tile_server("https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", max_zoom=25)
+        self.map_widget.grid(row=1, column=0, sticky="nsew")
 
-        slider_label = tk.Label(root, text="Crawling Verbosity (def=30): ", bg="#000000", fg="#ffffff", font=("Arial", 8))
-        slider_label.place(x=800, y=95)
+        # 3. Intelligence Hub (Right Side)
+        self.intel_frame = ctk.CTkFrame(self, width=400, corner_radius=10, fg_color="#0f1219", border_color="#18E63B", border_width=1)
+        self.intel_frame.grid(row=0, column=2, rowspan=1, padx=10, pady=10, sticky="nsew")
+        self.intel_frame.grid_rowconfigure(1, weight=1)
 
-        PantheonConfiguration.PANTHEON_DEFAULT_COUNT = self.slider.get()
+        self.intel_label = ctk.CTkLabel(self.intel_frame, text="DUAL INTEL GRID", font=ctk.CTkFont(size=14, weight="bold"), text_color="#18E63B")
+        self.intel_label.grid(row=0, column=0, pady=10)
 
-        centered_label = tk.Label(
-            root, text="IOT Camera Links (<Enter> to view LIVE\u25CF feed): ", bg="#000000", fg="#ffffff", font=("Arial", 10)
-        )
-        centered_label.place(x=75, y=135)
-        geo_label = tk.Label(
-            root, text="Geolocation: ", bg="#000000", fg="#ffffff", font=("Arial", 10)
-        )
-        geo_label.place(x=650, y=140)
+        # Tabview for Online/Offline separation
+        self.tabview = ctk.CTkTabview(self.intel_frame, fg_color="#0f1219", segmented_button_selected_color="#18E63B", 
+                                       segmented_button_selected_hover_color="#14c431", segmented_button_unselected_color="#0b0e14")
+        self.tabview.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
+        self.tabview.add("ONLINE")
+        self.tabview.add("OFFLINE")
 
-        http_data_label = tk.Label(
-            root, text="Map View: ", bg="#000000", fg="#ffffff", font=("Arial", 10)
-        )
-        http_data_label.place(x=650, y=440)
-        self.setup_labels(root)
+        self.target_list = tk.Listbox(self.tabview.tab("ONLINE"), bg="#0f1219", fg="#18E63B", font=("Courier", 12), borderwidth=0, highlightthickness=0)
+        self.target_list.pack(fill="both", expand=True)
+        self.target_list.bind("<<ListboxSelect>>", self.add_ip_location_online)
+        self.target_list.bind("<Double-Button-1>", self.browser_load_url_online)
 
-        menubar = tk.Menu(root)
-        filemenu = tk.Menu(menubar, tearoff=0, fg="white", bg="black")
-        filemenu.add_command(label="Save Pantheon Crawl", command=self.write_file_handler)
-        filemenu.add_command(label="Load Pantheon Crawl", command=self.load_logfile)
-        filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=root.quit)
-        menubar.add_cascade(label="Pantheon File Controller", menu=filemenu)
+        self.offline_list = tk.Listbox(self.tabview.tab("OFFLINE"), bg="#0f1219", fg="#ff4d4d", font=("Courier", 12), borderwidth=0, highlightthickness=0)
+        self.offline_list.pack(fill="both", expand=True)
+        self.offline_list.bind("<<ListboxSelect>>", self.add_ip_location_offline)
+        
+        self.info_box = ctk.CTkTextbox(self.intel_frame, height=200, fg_color="#0b0e14", text_color="#18E63B", font=("Courier", 12), border_color="#18E63B", border_width=1)
+        self.info_box.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
 
-        helpmenu = tk.Menu(menubar, tearoff=0, fg="white", bg="black")
-        helpmenu.add_command(label="About", command=self.open_github_no_event)
-        helpmenu.add_command(label="Legal", command=self.open_legal_no_event)
-        helpmenu.add_command(label="Commands", command=self.command_list)
-        menubar.add_cascade(label="Pantheon Help", menu=helpmenu)
+        # 4. Console Log (Bottom)
+        self.console_frame = ctk.CTkFrame(self, height=150, corner_radius=0, fg_color="#05070a", border_width=1, border_color="#18E63B")
+        self.console_frame.grid(row=1, column=1, columnspan=2, sticky="ew")
+        
+        self.console_text = ctk.CTkTextbox(self.console_frame, height=120, fg_color="transparent", text_color="#18E63B", font=("Courier", 11))
+        self.console_text.pack(fill="both", expand=True, padx=5, pady=5)
+        self.log_to_console("ZenceFil SOC Terminal Aktif. Sistem Gözetimi Başlatıldı.")
 
-        root.config(menu=menubar)
+    def create_stat_card(self, master, label, value):
+        card = ctk.CTkFrame(master, width=120, height=60, fg_color="#0f1219", border_color="#18E63B", border_width=1)
+        card.grid_propagate(False)
+        lbl = ctk.CTkLabel(card, text=label, font=ctk.CTkFont(size=8, weight="bold"), text_color="#18E63B")
+        lbl.pack(pady=(5, 0))
+        val = ctk.CTkLabel(card, text=value, font=ctk.CTkFont(size=16, weight="bold"), text_color="#18E63B")
+        val.pack()
+        card.val_label = val # store reference to update
+        return card
 
-    def setup_results_box(self):
-        self.results_box.pack(fill=tk.BOTH, expand=True)
-        self.results_box["bg"] = "#000000"
-        self.results_box["borderwidth"] = "3px"
-        ft = tkFont.Font(family="Arial", size=16)
-        self.results_box["font"] = ft
-        self.results_box["fg"] = "#9f9f9f"
-        self.results_box["justify"] = "left"
-        self.results_box.place(x=80, y=200, width=530, height=580)
+    def add_country_buttons(self):
+        # Project HADES: Cyber Intelligence Fusion
+        btn_tr = ctk.CTkButton(self.scroll_frame, text="TR DARBE MODU", command=lambda: self.clear_and_execute_webcam("TR"),
+                            fg_color="#D32F2F", text_color="#FFFFFF", anchor="center", hover_color="#B71C1C",
+                            font=ctk.CTkFont(size=14, weight="bold"), height=40)
+        btn_tr.pack(fill="x", padx=10, pady=(15, 5))
 
-        scrollbar = tk.Scrollbar(self.results_box, orient=tk.VERTICAL, activebackground="red")
-        scrollbar.config(command=self.results_box.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)            
-        self.results_box.config(yscrollcommand=scrollbar.set)
+        btn_il = ctk.CTkButton(self.scroll_frame, text="IL DARBE MODU", command=lambda: self.clear_and_execute_webcam("IL"),
+                            fg_color="#1E88E5", text_color="#FFFFFF", anchor="center", hover_color="#1565C0",
+                            font=ctk.CTkFont(size=14, weight="bold"), height=40)
+        btn_il.pack(fill="x", padx=10, pady=5)
 
-        self.results_box2.place(x=650, y=180, width=530, height=250)
-    
-    def create_country_buttons(self, country_buttons):
-        x, y, row_height = 100, 5, 30
-        for country, command in country_buttons.items():
-            country_button = tk.Button(root, text=country, command=command, bg="#000000", fg="green", font=("Arial", 7, "bold"))
-            country_button.place(x=x, y=y, width=90, height=25)
-            x += 100
+        btn_ir = ctk.CTkButton(self.scroll_frame, text="IR DARBE MODU", command=lambda: self.clear_and_execute_webcam("IR"),
+                            fg_color="#388E3C", text_color="#FFFFFF", anchor="center", hover_color="#2E7D32",
+                            font=ctk.CTkFont(size=14, weight="bold"), height=40)
+        btn_ir.pack(fill="x", padx=10, pady=(5, 15))
+        
+        # Descriptive label for HADES
+        desc = ctk.CTkLabel(self.scroll_frame, text="IoT Dorking + Stealth Pulse\nFusion Intelligence", 
+                            font=ctk.CTkFont(size=11, weight="bold"), text_color="#D32F2F")
+        desc.pack(pady=5)
 
-            if x > 1000:
-                x = 100
-                y += row_height
+    def log_to_console(self, msg):
+        import datetime
+        timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+        self.console_text.insert("end", f"[{timestamp}] >> {msg}\n")
+        self.console_text.see("end")
 
-    def setup_labels(self, root):
-        panthlabel = tk.Label(root, bg="#000000")
-        ft = tkFont.Font(family="Terminal", size=14, weight="bold")
-        panthlabel["font"] = ft
-        panthlabel["fg"] = "#ffffff"
-        panthlabel["justify"] = "center"
-        panthlabel["text"] = "Pantheon."
-        panthlabel.place(x=1150, y=0, width=100, height=37)
-
-        p2label = tk.Label(root, bg="#000000", fg="green", font=("Arial Italic", 8), text="Insecure Camera Parser")
-        p2label.place(x=1120, y=25, width=150, height=37)
-
-        github_label = tk.Label(
-            root, text="GitHub", fg="#ffffff", bg="#000000", cursor="hand2", underline=0, font=("Arial", 10, "italic")
-        )
-        github_label.bind("<Button-1>", self.open_github)
-        github_label.place(x=10, y=780)
-
-        legal_label = tk.Label(
-            root, text="Ethical Notice", fg="#ffffff", bg="#000000", cursor="hand2", underline=0, font=("Arial", 10, "italic")
-        )
-        legal_label.bind("<Button-1>", self.open_legal)
-        legal_label.place(x=75, y=780)
-
-        copyright_label = tk.Label(
-            root, text="Copyright (c) 2023 Josh Schiavone", fg="#ffffff", bg="#000000", cursor="hand2",
-            font=("Arial", 10, "italic")
-        )
-        copyright_label.place(x=1050, y=780)
-
-        self.results_label = tk.Label(
-            root, text="", bg="#000000", fg="red", font=("Arial Italic", 8, "bold")
-        )
-        self.results_label.place(x=80, y=160)
-
-        clear_markers_button = tk.Button(root, text="Clear Markers", command=self.clear_markers, bg="#000000", fg="red", font=("Arial", 8, "bold"))
-        clear_markers_button.place(x=1080, y=440, width=100, height=25)
-
-
-    def get_platform_title(self):
-        if sys.platform == "win32":
-            PantheonConfiguration.PANTHEON_OS = "Windows"
-            return f"Pantheon: Developed by {__author__} - Ver {__version__} - Pantheon user: Windows"
-        elif sys.platform == "darwin":
-            PantheonConfiguration.PANTHEON_OS = "Darwin"
-            return f"Pantheon: Developed by {__author__} - Ver {__version__} - Pantheon user: MacOS"
-        elif sys.platform == "linux":
-            PantheonConfiguration.PANTHEON_OS = "Linux"
-            return f"Pantheon: Developed by {__author__} - Ver {__version__} - Pantheon user: Linux"
-        else:
-            return f"Pantheon - Developed by {__author__}"
-
-    def create_country_widgets(self, root):
-        return {
-            "Canada": lambda: self.clear_and_execute_webcam("CA"),
-            "USA": lambda: self.clear_and_execute_webcam("US"),
-            "Mexico": lambda: self.clear_and_execute_webcam("MX"),
-            "Brazil": lambda: self.clear_and_execute_webcam("BR"),
-            "Romania": lambda: self.clear_and_execute_webcam("RO"),
-            "Poland": lambda: self.clear_and_execute_webcam("PL"),
-            "South Africa": lambda: self.clear_and_execute_webcam("ZA"),
-            "France": lambda: self.clear_and_execute_webcam("FR"),
-            "Russia": lambda: self.clear_and_execute_webcam("RU"),
-            "Germany": lambda: self.clear_and_execute_webcam("DE"),
-            "Finland": lambda: self.clear_and_execute_webcam("FI"),
-            "China": lambda: self.clear_and_execute_webcam("CN"),
-            "Japan": lambda: self.clear_and_execute_webcam("JP"),
-            "Norway": lambda: self.clear_and_execute_webcam("NO"),
-            "South Korea": lambda: self.clear_and_execute_webcam("KR"),
-            "Taiwan": lambda: self.clear_and_execute_webcam("TW"),
-            "Spain": lambda: self.clear_and_execute_webcam("ES"),
-            "Netherlands": lambda: self.clear_and_execute_webcam("NL"),
-            "United Kingdom": lambda: self.clear_and_execute_webcam("GB"),
-            "Ireland": lambda: self.clear_and_execute_webcam("IE"),
-            "Sweden": lambda: self.clear_and_execute_webcam("SE"),
-            "Israel": lambda: self.clear_and_execute_webcam("IL"),
-            "India": lambda: self.clear_and_execute_webcam("IN"),
-            "Australia": lambda: self.clear_and_execute_webcam("AU"),
-            "Italy": lambda: self.clear_and_execute_webcam("IT"),
-            "Switzerland": lambda: self.clear_and_execute_webcam("CH"),
-            "Belarus": lambda: self.clear_and_execute_webcam("BY"),
-            "Iran": lambda: self.clear_and_execute_webcam("IR"),
-            "Indonesia": lambda: self.clear_and_execute_webcam("ID"),
-            "Estonia": lambda: self.clear_and_execute_webcam("EE"),
-            "Czech Republic": lambda: self.clear_and_execute_webcam("CZ"),
-            "Austria": lambda: self.clear_and_execute_webcam("AT"),
-            "Belgium": lambda: self.clear_and_execute_webcam("BE"),
-            "Bulgaria": lambda: self.clear_and_execute_webcam("BG"),
-            "Serbia": lambda: self.clear_and_execute_webcam("RS"),
-            "Ukraine": lambda: self.clear_and_execute_webcam("UA"),
-            "Slovakia": lambda: self.clear_and_execute_webcam("SK"),
-        }
-
-    def open_github(self, event):
-        github_url = "https://github.com/josh0xA/Pantheon"
-        webbrowser.open_new_tab(github_url)
-
-    def open_github_no_event(self):
-        github_url = "https://github.com/josh0xA/Pantheon"
-        webbrowser.open_new_tab(github_url)
-
-    def open_legal(self, event):
-        legal_url = "https://joshschiavone.com/panth_info/panth_ethical_notice.html"
-        webbrowser.open_new_tab(legal_url)
-
-    def open_legal_no_event(self):
-        legal_url = "https://joshschiavone.com/panth_info/panth_ethical_notice.html"
-        webbrowser.open_new_tab(legal_url)
-
-    def browser_load_url(self, event):
-        selected_index = self.results_box.curselection()[0]
-        selected_url = self.results_box.get(selected_index)
-        webbrowser.open_new(selected_url)
-
-    def clear_results(self):
-        self.results_box.delete(0, tk.END)
-        PantheonConfiguration.webcams_found = []
-
-    def clear_results2(self):
-        self.results_box2.delete("1.0", tk.END)
-
-    def clear_results3(self):
-        self.results_box3.delete(0, tk.END)
-
-    def apply_slider(self):
-        PantheonConfiguration.PANTHEON_DEFAULT_COUNT = self.slider.get()
-
-    def execute_webcam(self, country):
-        self.loading_label = tk.Label(root, text="Loading...", font=("Arial", 12), fg="yellow", bg="black")
-        self.loading_label.place(x=530, y=140)
-        self.webcam_execute(country)
+    def update_slider_label(self, value):
+        self.stat_card_intensity.val_label.configure(text=str(int(value)))
+        PantheonConfiguration.PANTHEON_DEFAULT_COUNT = int(value)
 
     def clear_and_execute_webcam(self, country):
-        self.clear_results()
-        self.execute_webcam(country)
-
-    def country_code_to_name(self, country_code):
-        try:
-            country = pycountry.countries.get(alpha_2=country_code)
-            if country:
-                if hasattr(country, 'official_name') and country.official_name:
-                    return country.official_name
-                else:
-                    return country.name
-            else:
-                return "[Null]"
-        except Exception as e: pass
-
-    def webcam_execute(self, country):
-        self.apply_slider()
-        def crawl_and_display():
+        self.target_list.delete(0, tk.END)
+        self.offline_list.delete(0, tk.END)
+        self.info_box.delete("1.0", "end")
+        self.stat_card_targets.val_label.configure(text="...")
+        self.stat_card_online.val_label.configure(text="...")
+        self.stat_card_offline.val_label.configure(text="...")
+        
+        depth = int(self.slider.get())
+        
+        # Project HADES Message
+        burst_msg = f"PROJECT HADES PROTOKOLÜ BAŞLATILDI: {country} | Fusion Intelligence"
+        ZenceFilVoice.speak(f"{country} üzerinde Hades protokolü ve görünmez port taraması başlatıldı.")
+            
+        self.log_to_console(burst_msg)
+        self.log_to_console("Multi-Vector Discovery motoru ısındırılıyor...")
+        
+        def run_crawl():
             PantheonConfiguration.num_webcams_found = 0
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                future = executor.submit(PantheonWebcam().crawl, country)
-                future.result()  
-                concurrent.futures.wait([future])  
-            # remove duplicates
-            PantheonConfiguration.webcams_found = list(dict.fromkeys(PantheonConfiguration.webcams_found)) 
-            self.auto_log_data = PantheonConfiguration.webcams_found          
-            for idx, webcam in enumerate(PantheonConfiguration.webcams_found, start=1):
-                PantheonConfiguration.num_webcams_found += 1
-                self.results_box.insert(tk.END, f"{idx}. {webcam}")
-                self.results_box.itemconfig(tk.END, {"fg": "#18E63B"})
-            self.loading_label.destroy()
-            country_name = self.country_code_to_name(country)
-            self.results_label.config(fg="red",
-                text=f"Webcams Found: ({PantheonConfiguration.num_webcams_found}) in country: {country_name}\nCrawling Verbosity: {PantheonConfiguration.PANTHEON_DEFAULT_COUNT}")
+            PantheonConfiguration.webcams_found = []
+            
+            # Start the multi-brand burst (Turbo scaling)
+            discovery_workers = 100 if self.turbo_var.get() else 60
+            
+            # Setup Live Callback
+            def on_found(cam_url):
+                # Verify status in background to avoid UI freeze
+                def verify():
+                    try:
+                        is_online = PantheonWebcam.check_status(cam_url)
+                        if is_online:
+                            self.after(0, lambda: self.target_list.insert(0, f"[ONLINE] {cam_url}"))
+                            # Update counter
+                            current = self.stat_card_online.val_label.cget("text")
+                            if current == "...": current = 0
+                            else: current = int(current)
+                            self.after(0, lambda: self.stat_card_online.val_label.configure(text=str(current + 1)))
+                            self.after(0, lambda: self.stat_card_online.val_label.configure(text=str(current + 1)))
+                            
+                            # 📝 Auto-Log to File (User Request)
+                            try:
+                                with open("online_findings.txt", "a") as f:
+                                    f.write(f"{cam_url}\n")
+                            except: pass
+                        else:
+                            # Optional: Show offline in real-time or just skip to keep UI clean
+                            pass 
+                    except: pass
+                        
+                threading.Thread(target=verify, daemon=True).start()
 
-        self.clear_results()
-        self.clear_results2()
-        self.results_label.config(text="")
+            # Execute Crawl with Callback
+            found = PantheonWebcam.crawl(country, max_workers=discovery_workers, ui_callback=on_found)
+            
+            # Deduplicate
+            found = sorted(list(set(PantheonConfiguration.webcams_found)))
+            online_targets = []
+            offline_targets = []
 
-        threading.Thread(target=crawl_and_display).start()
+            self.log_to_console(f"Keşif tamamlandı. {len(found)} IP analiz ediliyor (Heartbeat Pulse)...")
 
-    def add_ip_location(self, event):
-        self.clear_results2()
+            # Status Checking with Burst Concurrency (Turbo Support)
+            max_status_workers = 100 if self.turbo_var.get() else 40
+            def check_and_categorize(url):
+                if PantheonWebcam.check_status(url):
+                    online_targets.append(url)
+                else:
+                    offline_targets.append(url)
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_status_workers) as status_executor:
+                status_executor.map(check_and_categorize, found)
+
+            # Update UI safely
+            def update_ui():
+                self.target_list.delete(0, tk.END)
+                self.offline_list.delete(0, tk.END)
+                
+                for idx, cam in enumerate(sorted(online_targets), 1):
+                    self.target_list.insert(tk.END, f"{idx}. [ONLINE] {cam}")
+                
+                for idx, cam in enumerate(sorted(offline_targets), 1):
+                    self.offline_list.insert(tk.END, f"{idx}. [OFFLINE] {cam}")
+                
+                self.stat_card_targets.val_label.configure(text=str(len(found)))
+                self.stat_card_online.val_label.configure(text=str(len(online_targets)))
+                self.stat_card_offline.val_label.configure(text=str(len(offline_targets)))
+                
+                self.log_to_console(f"ANALİZ TAMAMLANDI. CANLI: {len(online_targets)} | ÇEVRİMDIŞI: {len(offline_targets)}")
+                ZenceFilVoice.notify_scan_complete(len(online_targets), country)
+
+            self.after(0, update_ui)
+
+        threading.Thread(target=run_crawl, daemon=True).start()
+
+    def add_ip_location_online(self, event):
+        self.handle_target_selection(self.target_list)
+
+    def add_ip_location_offline(self, event):
+        self.handle_target_selection(self.offline_list)
+
+    def handle_target_selection(self, listbox):
         try:
-            selected_index = self.results_box.curselection()[0]
-            selected_item = self.results_box.get(selected_index)
-
-            match = re.search(r'https?://([^:/\s]+)', selected_item)
-            if match:
-                selected_url = match.group(1)
-            else:
-                selected_url = selected_item
-        except IndexError:
-            pass # Handle the case where the user clicks an empty listbox
-        try: 
+            selection = listbox.curselection()
+            if not selection: return
+            idx = selection[0]
+            item = listbox.get(idx)
+            
+            # Strip status prefixes like [ONLINE] or [OFFLINE]
+            clean_item = re.sub(r'^\d+\.\s+\[(ONLINE|OFFLINE)\]\s+', '', item)
+            
+            ip = re.search(r'http://([^:/\s]+)', clean_item).group(1) if "http" in clean_item else clean_item
+            self.log_to_console(f"Hedef Analizi: {ip}")
+            ZenceFilVoice.speak(f"Hedef {ip} analiz ediliyor.")
+            
+            self.info_box.delete("1.0", "end")
+            self.info_box.insert("end", f"--- TARGET INTELLIGENCE ---\nIP: {ip}\n")
+            
             import ipapi
-            try:
-                ip_location = ipapi.location(ip=selected_url)
-                if ip_location:
-                    self.results_box2.insert(tk.END, f"GeoDump for camera #{(selected_index + 1)}\n")
-                    self.results_box2.insert(tk.END, "*" * 45 + '\n')
-                    self.results_box2.insert(tk.END, f"IP: {selected_url}\n")
-                    self.results_box2.insert(tk.END, f"City: {ip_location.get('city')}\n")
-                    self.results_box2.insert(tk.END, f"Region: {ip_location.get('region')}\n")
-                    self.results_box2.insert(tk.END, f"Country: {ip_location.get('country_name')}\n")
-                    self.results_box2.insert(tk.END, f"Latitude: {ip_location.get('latitude')}\n")
-                    self.results_box2.insert(tk.END, f"Longitude: {ip_location.get('longitude')}\n")
-                    self.results_box2.insert(tk.END, f"Postal: {ip_location.get('postal')}\n")
-                    self.results_box2.insert(tk.END, f"Organization/ISP: {ip_location.get('org')}")
+            loc = ipapi.location(ip=ip)
+            if loc:
+                self.info_box.insert("end", f"ŞEHİR: {loc.get('city')}\n")
+                self.info_box.insert("end", f"ÜLKE: {loc.get('country_name')}\n")
+                self.info_box.insert("end", f"ISP: {loc.get('org')}\n")
+                
+                # Markers
+                lat, lon = loc.get('latitude'), loc.get('longitude')
+                self.map_widget.set_position(lat, lon)
+                self.map_widget.set_zoom(12)
+                self.markers.append(self.map_widget.set_marker(lat, lon, text=f"{ip} ({loc.get('city')})"))
+            
+            # Brand Analysis
+            threading.Thread(target=self.smart_brand_check, args=(ip,)).start()
+            
+        except Exception as e:
+            self.log_to_console(f"Analiz Hatası: {e}")
 
-                    self.markers.append(self.map_widget.set_marker(ip_location['latitude'], ip_location['longitude'], 
-                                            text=f"{ip_location['city']}, {ip_location['country']} (#{selected_index + 1})\n({ip_location['ip']})",
-                                            font=("Arial", 9), text_color="green", image_zoom_visibility=(0, float('inf'))))
+    def browser_load_url_online(self, event):
+        selection = self.target_list.curselection()
+        if not selection: return
+        item = self.target_list.get(selection[0])
+        url = re.sub(r'^\d+\.\s+\[ONLINE\]\s+', '', item)
+        self.log_to_console(f"Tarayıcı Açılıyor: {url}")
+        webbrowser.open(url)
 
-            except UnboundLocalError as ule: pass # this is fine
+    def browser_load_url_offline(self, event):
+        self.log_to_console("Sistem ÇEVRİMDIŞI. Bağlantı kurulamadı.")
+        ZenceFilVoice.speak("Sistem çevrimdışı durumda. Bağlantı kurulamıyor.")
 
-        except Exception as e: # this could be either an import error, or ratelimit error 
-            print(f"[INFO] {e} \n\t- not a fatal error, using secondary geolocation API. (ip2geotools)")
-            try:
-                ip_location = IPGeolocation.get_location_ip2(selected_url)
-                if ip_location:
-                    self.results_box2.insert(tk.END, f"GeoDump for camera #{(selected_index + 1)}\n")
-                    self.results_box2.insert(tk.END, "*" * 45 + '\n')
-                    self.results_box2.insert(tk.END, f"IP: {ip_location['ip']}\n")
-                    self.results_box2.insert(tk.END, f"City: {ip_location['city']}\n")
-                    self.results_box2.insert(tk.END, f"Region: {ip_location['region']}\n")
-                    self.results_box2.insert(tk.END, f"Country: {ip_location['country']}\n")
-                    self.results_box2.insert(tk.END, f"Latitude: {ip_location['latitude']}\n")
-                    self.results_box2.insert(tk.END, f"Longitude: {ip_location['longitude']}")
-
-                    self.markers.append(self.map_widget.set_marker(ip_location['latitude'], ip_location['longitude'], 
-                                            text=f"{ip_location['city']}, {ip_location['country']} (#{selected_index + 1})\n({ip_location['ip']})",
-                                            font=("Arial", 9), text_color="green", image_zoom_visibility=(0, float('inf'))))
-
-            except UnboundLocalError: pass # this is fine
-
-    def get_markers(self):
-        return self.markers
-
-    def clear_markers(self):
-        for marker in self.get_markers():
-            self.map_widget.delete(marker)
-        self.get_markers().clear()
-
-    def get_http_data(self, event):
+    def smart_brand_check(self, ip):
         try:
-            selected_index = self.results_box.curselection()[0]
-            selected_item = self.results_box.get(selected_index)
+            resp = requests.get(f"http://{ip}", timeout=3, headers={'User-Agent': random.choice(Agents.useragent)})
+            brand = ZenceFilSmartAnalyze.detect_brand(resp.headers, resp.text)
+            self.info_box.insert("end", f"MARKA: {brand}\n")
+            self.log_to_console(f"Cihaz Kimliği: {brand}")
+        except:
+            self.info_box.insert("end", "MARKA: BİLİNMEYEN (Offline/Timeout)\n")
 
-            match = re.search(r'https?://\S+', selected_item)
+    def open_web_browser(self, url):
+        try:
+            self.log_to_console(f"Canlı Yayın Akışı Açılıyor: {url}")
+            ZenceFilVoice.speak("Canlı yayın başlatılıyor. Establishing connection.")
+            
+            # Using webbrowser for maximum compatibility with various security protocols and players
+            webbrowser.open_new(url)
+            
+            self.log_to_console("Bağlantı talebi tarayıcıya iletildi. Hedef aktif.")
+        except Exception as e:
+            self.log_to_console(f"HATA: Tarayıcı açılamadı: {e}")
+
+    def browser_load_url(self, event):
+        try:
+            selection = self.target_list.curselection()
+            if not selection: 
+                self.log_to_console("UYARI: Öncelikle bir hedef seçmelisiniz.")
+                return
+            
+            item = self.target_list.get(selection[0])
+            
+            # More robust URL extraction: handle indexing and trailing slashes
+            match = re.search(r'(https?://\d+\.\d+\.\d+\.\d+:\d+/?|https?://\S+)', item)
             if match:
-                selected_url = match.group(0)
+                selected_url = match.group(0).strip()
+                self.open_web_browser(selected_url)
             else:
-                selected_url = selected_item
-
-            user_agent = {
-                'User-Agent': random.choice(Agents.useragent)
-            }
-            response = requests.get(selected_url, headers=user_agent)
-            self.show_http_data_window(response)
-        except Exception as e: pass
-
-    def show_http_data_window(self, response):
-        http_data_window = tk.Toplevel(root)
-        http_data_window.title(f"HTTP Data for: {response.url}")
-        http_data_window.geometry("800x600")
-
-        search_var = tk.StringVar()
-        search_entry = tk.Entry(http_data_window, textvariable=search_var)
-        search_entry.pack(side=tk.TOP, fill=tk.X)
-        search_var.trace_add("write", lambda *args: self.filter_http_data(response, search_var.get()))
-
-        self.text_widget = tk.Text(http_data_window, wrap="word", font=("Arial", 12), bg="#000000", fg="#ffffff")
-        self.text_widget.insert(tk.END, f"Note: Fetching w/ Random User-Agent: \n\t{response.request.headers['User-Agent']}\n\n")
-        self.text_widget.insert(tk.END, f"HTTP Request URL: {response.url}\n")
-        self.text_widget.insert(tk.END, f"HTTP Response Code: {response.status_code}\n\n")
-
-        headers_text = str(response.headers)
-        self.text_widget.insert(tk.END, "HTTP Headers:\n")
-        self.text_widget.insert(tk.END, headers_text + "\n\n")
-
-        response_text = response.text
-        self.text_widget.insert(tk.END, "HTTP Response Text:\n")
-        self.text_widget.insert(tk.END, response_text)
-
-        self.text_widget.config(state=tk.DISABLED) 
-        self.text_widget.pack(expand=True, fill="both")
-
-        scrollbar = tk.Scrollbar(self.text_widget, orient=tk.VERTICAL, activebackground="red")
-        scrollbar.config(command=self.text_widget.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)            
-        self.text_widget.config(yscrollcommand=scrollbar.set)
-
-    def filter_http_data(self, response, search_query):
-        start_pos = "1.0"
-        for tag in self.text_widget.tag_names():
-            self.text_widget.tag_remove(tag, "1.0", "end")
-            countVar = tk.StringVar()
-        try:
-            while start_pos != "end":
-                pos = self.text_widget.search(search_query, start_pos, stopindex="end", 
-                count=countVar, nocase=True)
-                start_pos =  "%s + %sc" % (pos, int(countVar.get()) + 1)
-                self.text_widget.tag_configure("search", background="green")
-                self.text_widget.tag_add("search", pos, "%s + %sc" % (pos, countVar.get()))
-        except tk.TclError:
-            pass
-        except ValueError:
-            pass
+                self.log_to_console("HATA: Seçilen metinde geçerli bir URL tespit edilemedi.")
+                ZenceFilVoice.speak("Hata. Geçerli bir URL bulunamadı.")
+        except Exception as e:
+            self.log_to_console(f"Analiz Hatası (URL Loading): {e}")
 
     def write_file_handler(self):
         from datetime import datetime
-        
-        logfilename = f'{datetime.now().strftime("PantheonLog__%Y-%m-%d_%H--%M--%S")}.pantheon_log'
-
-        if self.results_box.size() == 0:
-            messagebox.showerror("Error", "No crawling data to save.")
-            return
-
-        PantheonLogger(logfilename).log_info("Do not modify this file directly if you want to load it into Pantheon.")
-        PantheonLogger(logfilename).log_text(f"Pantheon Crawl Results ({os.path.abspath(logfilename)})")
-        PantheonLogger(logfilename).log_text(self.results_label.cget("text"))
-        PantheonLogger(logfilename).log(self.results_box.get(0, tk.END))
-        messagebox.showinfo("Log File Created Successfully", "Log file saved to: " + os.path.abspath(logfilename))
-
-
-    def load_logfile_handler(self, filename):
-        with open(filename, 'r') as f:
-            lines = f.readlines()
-            self.results_label.config(fg="yellow", text=f"From Log File: {filename.split('/')[-1]}")
-            lines = lines[4:]
-            for line in lines:
-                self.results_box.insert(tk.END, line)
-                self.results_box.itemconfig(tk.END, {"fg": "#18E63B"})
-        f.close()
+        logfilename = f'ZenceFilLog_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'
+        with open(logfilename, "w") as f:
+            f.write(f"ZenceFil SOC LOG\nDate: {datetime.now()}\n\n")
+            items = self.target_list.get(0, "end")
+            for item in items: f.write(item + "\n")
+        messagebox.showinfo("Başarılı", f"Log kaydedildi: {logfilename}")
+        self.log_to_console(f"Log dosyası oluşturuldu: {logfilename}")
 
     def load_logfile(self):
-        filetypes = (
-            ('Pantheon Log Files', '*.pantheon_log'),
-        )
-
-        filename = fd.askopenfilename(
-            title='Open a Pantheon Log File',
-            initialdir='/',
-            filetypes=filetypes)
-        
+        filename = fd.askopenfilename(title='ZenceFil Log Yükle', filetypes=[('Log Files', '*.log'), ('All Files', '*.*')])
         if filename:
-            self.clear_results()
-            self.clear_results2()
-            self.load_logfile_handler(filename)
+            self.target_list.delete(0, "end")
+            with open(filename, "r") as f:
+                for line in f: self.target_list.insert("end", line.strip())
+            self.log_to_console(f"Log yüklendi: {filename}")
 
-    def command_list(self):
-        command_window = tk.Toplevel(root)
-        command_window.title("Pantheon Commands")
-        command_window.geometry("500x500")
-
-        command_list = tk.Text(command_window, wrap="word", font=("Arial", 12), bg="#000000", fg="#ffffff")
-        command_list.insert(tk.END, "Pantheon Commands\n")
-        command_list.insert(tk.END, "*" * 45)
-        command_list.insert(tk.END, "\n\n")
-        command_list.insert(tk.END, f"View Feed: {PantheonConfiguration.controls['view-feed']}\n\n")
-        command_list.insert(tk.END, f"View HTTP Data: {PantheonConfiguration.controls['view-http']}\n\n")
-        command_list.insert(tk.END, f"Adjust Verbosity: {PantheonConfiguration.controls['verbosity']}\n\n")
-        command_list.insert(tk.END, f"Save Crawl: {PantheonConfiguration.controls['save-crawl']}\n\n")
-        command_list.insert(tk.END, f"Load Crawl: {PantheonConfiguration.controls['load-crawl']}\n\n")
-        command_list.insert(tk.END, f"Search HTTP Data: {PantheonConfiguration.controls['search-http']}\n\n")
-
-        command_list.config(state=tk.DISABLED)
-        command_list.pack(expand=True, fill="both")
-
-
-    def open_web_browser(self, url):
-        webview.create_window('Pantheon Integrated Live Feed', url)
-        webview.start(private_mode=True, user_agent=random.choice(Agents.useragent))
-
-    def browser_load_url(self, event):
-        selected_index = self.results_box.curselection()[0]
-        selected_item = self.results_box.get(selected_index)
-
-        match = re.search(r'https?://\S+', selected_item)
-        if match:
-            selected_url = match.group(0)
-        else:
-            selected_url = selected_item
-
-        self.open_web_browser(selected_url)
-
-    def run(self):
-        root.mainloop()
+    def get_platform_title(self):
+        return f"ZenceFil Pantheon | v{__version__}"
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = Pantheon(root)
-    app.run()
+    app = ZenceFilDashboard()
+    app.mainloop()
