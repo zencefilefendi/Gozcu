@@ -1,7 +1,7 @@
-# ZenceFil Pantheon - Project HADES (SOC Terminal)
+# ZenceFil Gözcü - Project HADES (SOC Terminal)
 
 ## Hakkında (About)
-Pantheon (ZenceFil Edition), açık ağ kameralarını tespit edip harita üzerinde konumlandıran gelişmiş bir Masaüstü (GUI) OSINT ve IoT SOC (Security Operations Center) aracıdır. 
+Gözcü (ZenceFil Edition), açık ağ kameralarını tespit edip harita üzerinde konumlandıran gelişmiş bir Masaüstü (GUI) OSINT ve IoT SOC (Security Operations Center) aracıdır. 
 
 Bu sürüm, **Zencefil Efendi** tarafından "Project HADES" kod adıyla baştan aşağı yeniden tasarlanmış ve geliştirilmiştir. Derin Dorking motoru, "Stealth Pulse" port tarama yeteneği, asenkron hızlandırılmış tarama mimarisi ve karanlık temalı SOC Dashboard arayüzü ile donatılmıştır.
 
@@ -15,11 +15,11 @@ Bu sürüm, **Zencefil Efendi** tarafından "Project HADES" kod adıyla baştan 
 ## Kurulum (Installation)
 1. Repoyu klonlayın:
    ```bash
-   git clone https://github.com/zencefilefendi/Pantheon.git
+   git clone https://github.com/zencefilefendi/Gozcu.git
    ```
 2. Dizin içerisine girin:
    ```bash
-   cd Pantheon
+   cd Gözcü
    ```
 3. Gerekli kütüphaneleri yükleyin:
    ```bash
@@ -29,11 +29,11 @@ Bu sürüm, **Zencefil Efendi** tarafından "Project HADES" kod adıyla baştan 
 
 **Çalıştırma:**
 ```bash
-python3 pantheon.py
+python3 gozcu.py
 ```
 
 ## Etik Kullanım Uyarısı (Ethical Notice)
-Bu programın geliştiricisi olan **Zencefil Efendi**, bu veri toplama aracının kötüye kullanımından sorumlu değildir. ZenceFil Pantheon, yalnızca modern arama motorları tarafından zaten indekslenmiş olan kamuya açık bilgileri derler ve sunar. Parola korumalı canlı yayınlara veya sistemlere yetkisiz erişim sağlamaya **çalışmayın** - bu yasa dışıdır. Pantheon yalnızca **eğitim ve güvenlik (SOC) izleme/farkındalık amaçları** için geliştirilmiştir. 
+Bu programın geliştiricisi olan **Zencefil Efendi**, bu veri toplama aracının kötüye kullanımından sorumlu değildir. ZenceFil Gözcü, yalnızca modern arama motorları tarafından zaten indekslenmiş olan kamuya açık bilgileri derler ve sunar. Parola korumalı canlı yayınlara veya sistemlere yetkisiz erişim sağlamaya **çalışmayın** - bu yasa dışıdır. Gözcü yalnızca **eğitim ve güvenlik (SOC) izleme/farkındalık amaçları** için geliştirilmiştir. 
 
 ## Lisans (License)
 MIT License

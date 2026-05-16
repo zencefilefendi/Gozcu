@@ -3,7 +3,7 @@ import re
 import requests
 import random
 import socket
-from src.config import PantheonConfiguration
+from src.config import GozcuConfiguration
 from src.recon_db import SHADOW_INTEL_TR
 from src.dork_engine import ZenceFilDorkEngine
 from headers.agents import Agents
@@ -31,12 +31,12 @@ class ZenceFilSmartAnalyze:
                     return brand
         return "BİLİNMEYEN (GENERIC)"
 
-class PantheonWebcam:
+class GozcuWebcam:
     @staticmethod
     def crawl(country, max_workers=60, depth=5, ui_callback=None):
         # Hyper-Focus: We are now a dedicated Turkey Intelligence Terminal
         country = "TR" 
-        cfg = PantheonConfiguration()
+        cfg = GozcuConfiguration()
         session = requests.Session()
         
         # ZenceFil ISP Intelligence: Comprehensive Turkish ISP Prefixes
@@ -104,7 +104,7 @@ class PantheonWebcam:
         }
         
         vectors = []
-        vectors.append((f'http://www.insecam.org/en/bycountry/TR/?page=', cfg.PANTHEON_DEFAULT_COUNT, "Omni-TR Base"))
+        vectors.append((f'http://www.insecam.org/en/bycountry/TR/?page=', cfg.GOZCU_DEFAULT_COUNT, "Omni-TR Base"))
         
         for tag in local_tags:
             vectors.append((f'http://www.insecam.org/en/bytag/{tag}/TR/?page=', depth, f"Omni-Tag: {tag}"))
@@ -142,7 +142,7 @@ class PantheonWebcam:
         cfg.webcams_found.extend(SHADOW_INTEL_TR)
         
         # 🟢 HADES: Inject External Intelligence
-        external_intel = PantheonWebcam.fetch_external_intelligence(max_results=100)
+        external_intel = GozcuWebcam.fetch_external_intelligence(max_results=100)
         cfg.webcams_found.extend(external_intel)
         if ui_callback:
             for ex_cam in external_intel: ui_callback(ex_cam)

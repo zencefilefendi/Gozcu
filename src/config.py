@@ -24,14 +24,14 @@ SOFTWARE.
 import sys
 import tkinter as tk
 
-class PantheonConfiguration:
+class GozcuConfiguration:
 
     PANTHEON_ERROR_CODE_STANDARD = -1
     PANTHEON_SUCCESS_CODE_STANDARD = 0
-    PANTHEON_OS = ""
-    PANTHEON_REQUESTS_SUCCESS_CODE = 200
+    GOZCU_OS = ""
+    GOZCU_REQUESTS_SUCCESS_CODE = 200
     PANTHEON_PROXY = False
-    PANTHEON_DEFAULT_COUNT = 0
+    GOZCU_DEFAULT_COUNT = 0
     webcams_found = []
     intel_map_webcams_found = []
     intel_markers = []
@@ -50,17 +50,17 @@ class PantheonConfiguration:
     }
 
     @staticmethod 
-    def pantheon_icon_handler(root):
+    def gozcu_icon_handler(root):
         import os
-        if PantheonConfiguration.PANTHEON_OS == "Windows":
-            if os.path.exists("imgs/pantheon_icon.ico"):
-                root.iconbitmap("imgs/pantheon_icon.ico")
-        if PantheonConfiguration.PANTHEON_OS == "Linux":
-            if os.path.exists("imgs/pantheon_icon.png"):
-                root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file='imgs/pantheon_icon.png'))
-        if PantheonConfiguration.PANTHEON_OS == "Darwin":
-            if os.path.exists("imgs/pantheon_icon.png"):
-                img = tk.Image("photo", file="imgs/pantheon_icon.png")
+        if GozcuConfiguration.GOZCU_OS == "Windows":
+            if os.path.exists("imgs/gozcu_icon.ico"):
+                root.iconbitmap("imgs/gozcu_icon.ico")
+        if GozcuConfiguration.GOZCU_OS == "Linux":
+            if os.path.exists("imgs/gozcu_icon.png"):
+                root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file='imgs/gozcu_icon.png'))
+        if GozcuConfiguration.GOZCU_OS == "Darwin":
+            if os.path.exists("imgs/gozcu_icon.png"):
+                img = tk.Image("photo", file="imgs/gozcu_icon.png")
                 root.call('wm', 'iconphoto', root._w, img)
         else:
             return None

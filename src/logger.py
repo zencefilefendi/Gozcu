@@ -23,9 +23,9 @@ SOFTWARE.
 '''
 
 import sys
-from src.config import PantheonConfiguration
+from src.config import GozcuConfiguration
 
-class PantheonLogger:
+class GozcuLogger:
     def __init__(self, logfile):
         self.logfile = logfile
 

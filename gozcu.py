@@ -31,9 +31,9 @@ import pycountry
 import urllib3
 import random
 
-from src.crawler import PantheonWebcam, ZenceFilSmartAnalyze
-from src.config import PantheonConfiguration
-from src.logger import PantheonLogger
+from src.crawler import GozcuWebcam, ZenceFilSmartAnalyze
+from src.config import GozcuConfiguration
+from src.logger import GozcuLogger
 from src.geo import *
 from src.voice_assistant import ZenceFilVoice
 from headers.agents import Agents
@@ -56,7 +56,7 @@ class ZenceFilDashboard(ctk.CTk):
         self.configure(fg_color="#0b0e14") # Obsidian Deep Black
         
         # Initialize Config
-        PantheonConfiguration.PANTHEON_DEFAULT_COUNT = 30
+        GozcuConfiguration.GOZCU_DEFAULT_COUNT = 30
 
         # Grid Configuration (2x3)
         self.grid_columnconfigure(0, weight=0) # Sidebar
@@ -216,7 +216,7 @@ class ZenceFilDashboard(ctk.CTk):
 
     def update_slider_label(self, value):
         self.stat_card_intensity.val_label.configure(text=str(int(value)))
-        PantheonConfiguration.PANTHEON_DEFAULT_COUNT = int(value)
+        GozcuConfiguration.GOZCU_DEFAULT_COUNT = int(value)
 
     def clear_and_execute_webcam(self, country):
         self.target_list.delete(0, tk.END)
@@ -236,8 +236,8 @@ class ZenceFilDashboard(ctk.CTk):
         self.log_to_console("Multi-Vector Discovery motoru ısındırılıyor...")
         
         def run_crawl():
-            PantheonConfiguration.num_webcams_found = 0
-            PantheonConfiguration.webcams_found = []
+            GozcuConfiguration.num_webcams_found = 0
+            GozcuConfiguration.webcams_found = []
             
             # Start the multi-brand burst (Turbo scaling)
             discovery_workers = 100 if self.turbo_var.get() else 60
@@ -247,7 +247,7 @@ class ZenceFilDashboard(ctk.CTk):
                 # Verify status in background to avoid UI freeze
                 def verify():
                     try:
-                        is_online = PantheonWebcam.check_status(cam_url)
+                        is_online = GozcuWebcam.check_status(cam_url)
                         if is_online:
                             self.after(0, lambda: self.target_list.insert(0, f"[ONLINE] {cam_url}"))
                             # Update counter
@@ -270,10 +270,10 @@ class ZenceFilDashboard(ctk.CTk):
                 threading.Thread(target=verify, daemon=True).start()
 
             # Execute Crawl with Callback
-            found = PantheonWebcam.crawl(country, max_workers=discovery_workers, ui_callback=on_found)
+            found = GozcuWebcam.crawl(country, max_workers=discovery_workers, ui_callback=on_found)
             
             # Deduplicate
-            found = sorted(list(set(PantheonConfiguration.webcams_found)))
+            found = sorted(list(set(GozcuConfiguration.webcams_found)))
             online_targets = []
             offline_targets = []
 
@@ -282,7 +282,7 @@ class ZenceFilDashboard(ctk.CTk):
             # Status Checking with Burst Concurrency (Turbo Support)
             max_status_workers = 100 if self.turbo_var.get() else 40
             def check_and_categorize(url):
-                if PantheonWebcam.check_status(url):
+                if GozcuWebcam.check_status(url):
                     online_targets.append(url)
                 else:
                     offline_targets.append(url)
@@ -426,7 +426,7 @@ class ZenceFilDashboard(ctk.CTk):
             self.log_to_console(f"Log yüklendi: {filename}")
 
     def get_platform_title(self):
-        return f"ZenceFil Pantheon | v{__version__}"
+        return f"ZenceFil Gözcü | v{__version__}"
 
 if __name__ == "__main__":
     app = ZenceFilDashboard()
